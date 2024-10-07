@@ -181,3 +181,5 @@ defaults write -g InitialKeyRepeat -int 10
 
 # THIS MUST BE PUT AT THE END OF THIS FILE FOR IT TO WORK PROPERLY
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
