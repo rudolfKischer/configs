@@ -10,11 +10,19 @@ Plug 'tpope/vim-fugitive'
 
 " Show indentation
 Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline-themes'
+
+Plug 'mhinz/vim-startify'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'github/copilot.vim'
 
 call plug#end()

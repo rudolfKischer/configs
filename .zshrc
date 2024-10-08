@@ -179,7 +179,68 @@ bindkey "^[V" toggle_prompt
 defaults write -g KeyRepeat -int 1
 defaults write -g InitialKeyRepeat -int 10
 
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FIGLET_FONT_PATH=~/.figlet
+export TERM=xterm-256color
+
+export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+
+
+function print_random_figlet_hello_world() {
+    # List of figlet fonts
+    local fonts=("Blocks" "Bloody" "Roman" "3d" "Rebel" "Electronic" "Elite" "Knob" "Sub-Zero"
+                 "THIS" "Slant" "Twisted" "doom" "epic" "flowerpower" "halfiwi" "rounded")
+
+    # Pick a random font from the list
+    local random_font="${fonts[RANDOM % ${#fonts[@]}]}"
+
+    # Generate 'Hello, World!' with the random figlet font and pipe through lolcat
+    figlet -c -f "$random_font" "Welcome Back" | lolcat -F 0.04
+
+    
+    # get a random splash text from ~/.configs/.splashtxt
+    #
+    local splash_text=$(shuf -n 1 ~/.configs/.splashtext)
+    # color it with lolcat
+    # center the splash text on window
+    local term_width=$(tput cols)
+    local padding=$((($term_width - ${#splash_text}) / 2))
+    echo -e "\n $(printf "%${padding}s")$splash_text" | lolcat -F 0.2
+}
+
+function terminal_dashboard() {
+    # Gather information
+    local USER=$(whoami)
+    local CURRENT_TIME=$(date +"%H:%M:%S")
+    local CURRENT_DATE=$(date +"%A, %d %B %Y")
+    local CURRENT_FOLDER=$(pwd)
+    local IP_ADDRESS=$(curl -s https://ipinfo.io/ip)
+   local DISK_USAGE=$(df -H /System/Volumes/Data | awk '{ if (NR==2) print $3 "/" $2 " (" $5 " used)" }')
+    local BATTERY_STATUS=$(pmset -g batt | grep -o "[0-9]\+%")
+
+    # Display the information in a stylized format
+    echo "==============================="
+    echo "User:             $USER"
+    echo "Time:             $CURRENT_TIME"
+    echo "Date:             $CURRENT_DATE"
+    echo "Current Folder:   $CURRENT_FOLDER"
+    echo "IP Address:       $IP_ADDRESS"
+    echo "Disk Usage:       $DISK_USAGE"
+    echo "Battery:          $BATTERY_STATUS"
+    echo "==============================="
+}
+
+# Function to display the terminal dashboard
+
+# Call the function when the terminal is opened
+print_random_figlet_hello_world
+terminal_dashboard
+
 # THIS MUST BE PUT AT THE END OF THIS FILE FOR IT TO WORK PROPERLY
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
